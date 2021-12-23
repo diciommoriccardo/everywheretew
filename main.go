@@ -14,6 +14,8 @@ func handleRequests() {
 	log.Fatal(http.ListenAndServe(":10000", nil))
 }*/
 
+//test
+
 func main() {
 	routes.SetAllRoutes()
 }
