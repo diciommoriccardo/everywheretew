@@ -1,21 +1,21 @@
 package everywheretew
 
 import (
-	routes "everywheretew/src/helpers"
+	webHookData "everywheretew/src/routes/webHook"
+	"log"
+	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-/*func homePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome to the HomePage!")
-	fmt.Println("Endpoint Hit: homePage")
+func handleRequests() {
+	router := mux.NewRouter().StrictSlash(true)
+	router.HandleFunc("/", func(http.ResponseWriter, *http.Request) {})
+	router.HandleFunc("/orders", webHookData.HandleOrderWebHook).Methods("POST")
+	router.HandleFunc("/products", webHookData.HandleProductsWebHook).Methods("POST")
+	log.Fatal(http.ListenAndServe(":10000", router))
 }
 
-func handleRequests() {
-	http.HandleFunc("/", homePage)
-	log.Fatal(http.ListenAndServe(":10000", nil))
-}*/
-
-//test
-
 func main() {
-	routes.SetAllRoutes()
+	handleRequests()
 }
