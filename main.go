@@ -1,21 +1,35 @@
-package everywheretew
+package main
 
 import (
-	webHookData "everywheretew/src/routes/webHook"
+	"fmt"
 	"log"
 	"net/http"
 
+	//client "github.com/diciommoriccardo/everywheretew/mongo"
 	"github.com/gorilla/mux"
 )
 
+func homePage(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Hello homepage")
+}
+
+func getOrderData(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Hello webHook")
+}
+
 func handleRequests() {
-	router := mux.NewRouter().StrictSlash(true)
-	router.HandleFunc("/", func(http.ResponseWriter, *http.Request) {})
-	router.HandleFunc("/orders", webHookData.HandleOrderWebHook).Methods("POST")
-	router.HandleFunc("/products", webHookData.HandleProductsWebHook).Methods("POST")
-	log.Fatal(http.ListenAndServe(":10000", router))
+	// creates a new instance of a mux router
+	myRouter := mux.NewRouter().StrictSlash(true)
+	// replace http.HandleFunc with myRouter.HandleFunc
+	myRouter.HandleFunc("/", homePage)
+	myRouter.HandleFunc("/order", getOrderData)
+	// finally, instead of passing in nil, we want
+	// to pass in our newly created router as the second
+	// argument
+	log.Fatal(http.ListenAndServe(":10000", myRouter))
 }
 
 func main() {
+	fmt.Println("Rest API v2.0 - Automated Decision")
 	handleRequests()
 }
