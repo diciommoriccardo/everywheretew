@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	//client "github.com/diciommoriccardo/everywheretew/mongo"
 	"github.com/gorilla/mux"
 )
 
@@ -18,18 +17,14 @@ func getOrderData(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRequests() {
-	// creates a new instance of a mux router
-	myRouter := mux.NewRouter().StrictSlash(true)
-	// replace http.HandleFunc with myRouter.HandleFunc
-	myRouter.HandleFunc("/", homePage)
-	myRouter.HandleFunc("/order", getOrderData)
-	// finally, instead of passing in nil, we want
-	// to pass in our newly created router as the second
-	// argument
-	log.Fatal(http.ListenAndServe(":10000", myRouter))
+	router := mux.NewRouter().StrictSlash(true)
+	router.HandleFunc("/", homePage)
+	router.HandleFunc("/order", getOrderData)
+	log.Fatal(http.ListenAndServe(":10000", router))
 }
 
 func main() {
+	ConnectToCluster()
 	fmt.Println("Rest API v2.0 - Automated Decision")
 	handleRequests()
 }

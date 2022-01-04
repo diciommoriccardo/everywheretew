@@ -4,25 +4,38 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 func ConnectToCluster() {
-	ctx := context.TODO()
-	uri := "mongodb+srv://cluster-everywheretew.4ulev.mongodb.net/myFirstDatabase?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority&tlsCertificateKeyFile=<path_to_certificate>"
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	uri := "mongodb+srv://cluster-everywheretew.4ulev.mongodb.net/myFirstDatabase?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority&tlsCertificateKeyFile=bin/mongoCert.pem"
 	clientOpts := options.Client().ApplyURI(uri)
-	client, err := mongo.Connect(ctx, clientOpts)
-	if err != nil {
+	client, ConnectionError := mongo.Connect(ctx, clientOpts)
+	err := client.Ping(ctx, readpref.Primary())
+
+	if ConnectionError != nil {
+		fmt.Println("ERROR")
 		log.Fatal(err)
+		log.Fatal(ConnectionError)
 	}
+
 	defer client.Disconnect(ctx)
-	collection := client.Database("testDB").Collection("testCol")
-	docCount, err := collection.CountDocuments(ctx, bson.D{})
-	if err != nil {
-		log.Fatal(err)
+	collection := client.Database("api-data").Collection("api")
+	docCount, CollectionErr := collection.CountDocuments(ctx, bson.D{})
+
+	if CollectionErr != nil {
+		fmt.Println("ERROR")
+		log.Fatal(CollectionErr)
 	}
+
+	fmt.Println("okay")
 	fmt.Println(docCount)
 }
