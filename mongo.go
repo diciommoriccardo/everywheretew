@@ -28,14 +28,15 @@ func ConnectToCluster() {
 	}
 
 	defer client.Disconnect(ctx)
-	collection := client.Database("api-data").Collection("api")
-	docCount, CollectionErr := collection.CountDocuments(ctx, bson.D{})
+	twitterCollection := client.Database("api").Collection("twitter-data")
+	//clusterCollection := client.Database("everywheretew").Collection("cluster")
+	//userCollection := client.Database("everywheretew").Collection("users")
+	docCount, CollectionErr := twitterCollection.CountDocuments(ctx, bson.D{})
 
 	if CollectionErr != nil {
 		fmt.Println("ERROR")
 		log.Fatal(CollectionErr)
 	}
 
-	fmt.Println("okay")
 	fmt.Println(docCount)
 }
