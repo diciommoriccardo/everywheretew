@@ -16,10 +16,16 @@ func getOrderData(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Hello webHook")
 }
 
+func getProductData(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Hello webHook")
+}
+
 func handleRequests() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", homePage)
-	router.HandleFunc("/order", getOrderData)
+	router.HandleFunc("/api/order", getOrderData).Methods("POST")
+	router.HandleFunc("/api/products", getProductData).Methods("POST")
+	router.HandleFunc("/api/cluster/{id}", getCluster).Methods("GET")
 	log.Fatal(http.ListenAndServe(":10000", router))
 }
 
