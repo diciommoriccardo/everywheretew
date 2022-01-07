@@ -12,25 +12,16 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Hello homepage")
 }
 
-func getOrderData(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Hello webHook")
-}
-
-func getProductData(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Hello webHook")
-}
-
-func handleRequests() {
+func Router() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", homePage)
-	router.HandleFunc("/api/order", getOrderData).Methods("POST")
-	router.HandleFunc("/api/products", getProductData).Methods("POST")
+	router.HandleFunc("/api/order", GetOrderData).Methods("POST")
+	router.HandleFunc("/api/products", GetProductData).Methods("POST")
 	router.HandleFunc("/api/cluster/{id}", getCluster).Methods("GET")
 	log.Fatal(http.ListenAndServe(":10000", router))
 }
 
 func main() {
-	ConnectToCluster()
-	fmt.Println("Rest API v2.0 - Automated Decision")
-	handleRequests()
+	fmt.Println("EverywhereTew - Automated Decision")
+	Router()
 }
