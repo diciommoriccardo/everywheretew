@@ -27,10 +27,7 @@ func ConnectToApiCluster() *mongo.Collection {
 		log.Fatal(ConnectionError)
 	}
 
-	defer client.Disconnect(ctx)
 	ApiCollection := client.Database("api").Collection("twitter-data")
-	// ClusterCollection := client.Database("everywheretew").Collection("cluster")
-	// UserCollection := client.Database("everywheretew").Collection("users")
 	docCount, CollectionErr := ApiCollection.CountDocuments(ctx, bson.D{})
 
 	if CollectionErr != nil {
@@ -57,7 +54,6 @@ func ConnectTo_Cluster() *mongo.Collection {
 		log.Fatal(ConnectionError)
 	}
 
-	defer client.Disconnect(ctx)
 	ClusterCollection := client.Database("everywheretew").Collection("cluster")
 	docCount, CollectionErr := ClusterCollection.CountDocuments(ctx, bson.D{})
 
@@ -85,7 +81,6 @@ func ConnectToUserCluster() *mongo.Collection {
 		log.Fatal(ConnectionError)
 	}
 
-	defer client.Disconnect(ctx)
 	UserCollection := client.Database("everywheretew").Collection("users")
 	docCount, CollectionErr := UserCollection.CountDocuments(ctx, bson.D{})
 
