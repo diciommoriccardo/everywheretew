@@ -40,8 +40,7 @@ func ConnectToApiCluster() *mongo.Collection {
 }
 
 func ConnectTo_Cluster() *mongo.Collection {
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 	uri := "mongodb+srv://cluster-everywheretew.4ulev.mongodb.net/myFirstDatabase?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority&tlsCertificateKeyFile=bin/mongoCert.pem"
 	clientOpts := options.Client().ApplyURI(uri)
@@ -55,14 +54,8 @@ func ConnectTo_Cluster() *mongo.Collection {
 	}
 
 	ClusterCollection := client.Database("everywheretew").Collection("cluster")
-	docCount, CollectionErr := ClusterCollection.CountDocuments(ctx, bson.D{})
 
-	if CollectionErr != nil {
-		fmt.Println("ERROR")
-		log.Fatal(CollectionErr)
-	}
-
-	fmt.Println(docCount)
+	defer cancel()
 	return ClusterCollection
 }
 
