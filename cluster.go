@@ -6,22 +6,23 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Cluster struct {
-	Id     primitive.ObjectID `json:"id"`
-	Name   string             `json:"name"`
-	UserId []int              `json:"userId"`
+	Id     primitive.ObjectID `bson:"_id, omitempty" json:"id"`
+	Name   string             `bson:"name" json:"name"`
+	UserId []int              `bson:"userId" json:"userId"`
 }
 
 func getCluster(w http.ResponseWriter, r *http.Request) {
-	params := r.URL.Query()
-	id := params["id"]
+	id := mux.Vars(r)["id"]
+	objID, _ := primitive.ObjectIDFromHex(id)
 	ClusterCollection := ConnectTo_Cluster()
-	defer ClusterCollection.Database().Client().Disconnect(context.Background())
-	result, err := ClusterCollection.Find(context.Background(), bson.M{"id": id})
+	result := Cluster{}
+	err := ClusterCollection.FindOne(context.Background(), bson.M{"_id": objID}).Decode(&result)
 	if err != nil {
 		panic(err)
 	}
@@ -31,11 +32,12 @@ func getCluster(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(result); err != nil {
 		panic(err)
 	}
+
+	defer ClusterCollection.Database().Client().Disconnect(context.Background())
 }
 
 func getAllCluster(w http.ResponseWriter, r *http.Request) {
 	ClusterCollection := ConnectTo_Cluster()
-	defer ClusterCollection.Database().Client().Disconnect(context.Background())
 
 	res := []Cluster{}
 	result, err := ClusterCollection.Find(context.Background(), bson.M{})
@@ -43,8 +45,7 @@ func getAllCluster(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	curErr := result.All(context.TODO(), &res)
-	defer result.Close(context.Background())
+	curErr := result.All(context.Background(), &res)
 	if curErr != nil {
 		panic(curErr)
 	}
@@ -54,6 +55,9 @@ func getAllCluster(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(res); err != nil {
 		panic(err)
 	}
+
+	defer ClusterCollection.Database().Client().Disconnect(context.Background())
+	defer result.Close(context.Background())
 }
 
 func insertCluster(c Cluster) {
