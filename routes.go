@@ -21,13 +21,13 @@ var routes = Routes{
 	Route{
 		"Get all cluster",
 		"GET",
-		"/api/cluster/all",
+		"/api/clusters/all",
 		getAllCluster,
 	},
 	Route{
 		"Get cluster",
 		"GET",
-		"/api/cluster/{id}",
+		"/api/clusters/{id}",
 		getCluster,
 	},
 	Route{
@@ -39,7 +39,13 @@ var routes = Routes{
 	Route{
 		"Add product data",
 		"POST",
-		"/api/products",
+		"/api/product",
 		GetProductData,
+	},
+	Route{
+		"Get user info",
+		"POST",
+		"/api/users/{id}",
+		GetUserData,
 	},
 }
