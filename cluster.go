@@ -70,4 +70,6 @@ func insertCluster(c Cluster) {
 		panic(err)
 	}
 	fmt.Println(result)
+
+	defer ClusterCollection.Database().Client().Disconnect(context.Background())
 }
