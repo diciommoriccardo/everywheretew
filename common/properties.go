@@ -1,0 +1,4 @@
+package common
+
+// TwitterBearerToken grazianosimone5 twitter developer account
+const TwitterBearerToken string = "AAAAAAAAAAAAAAAAAAAAAN0nYAEAAAAAZAjE4z0k60tAtnkPEUEgNHWNFfE%3DseZjhwDvqLkAU4xsoNrjUqdXguM279DGnygMdzGi1Nus7qWxWr"
