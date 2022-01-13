@@ -17,7 +17,7 @@ func main() {
 	//var testTwitterUser = models.GetTwitterUserByUsername("google")
 	//fmt.Printf("\n######## Test Tweets: %s", testTweets)
 	//fmt.Printf("\n######## Test Twitter User: %s", testTwitterUser)
-	//var testTweetsByQuery = models.GetTweetsByQuerySearch("everywheretew")
+	//var testTweetsByQuery = models.GetTweetsByQuerySearch("everywhere tew")
 	//fmt.Printf("\n######## Tweets contenenti il parametro ricercato: %d", len(testTweetsByQuery))
 
 	log.Fatal(http.ListenAndServe(":10000", router))
