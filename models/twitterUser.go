@@ -11,7 +11,7 @@ type TwitterUser struct {
 	name          string
 	username      string
 	email         string
-	tweets        []Tweet
+	pinnedTweets  []Tweet
 }
 
 func (t TwitterUser) String() string {
@@ -21,13 +21,25 @@ func (t TwitterUser) String() string {
 		"\n\tusername: %s"+
 		"\n\tpinnedTweetId: %s"+
 		"\n\temail: %s"+
-		"\n\ttweets: %s"+
-		"\n}", t.id, t.name, t.username, t.pinnedTweetId, t.email, t.tweets)
+		"\n\tpinnedTweets: %s"+
+		"\n}", t.id, t.name, t.username, t.pinnedTweetId, t.email, t.pinnedTweets)
 }
 
 func GetTwitterUserByUsername(username string) TwitterUser {
-	var twitterApiUser = response.ParseResponseFromJson(username)
-	var tweets = GetTweetsByUsername(username)
+	var twitterApiUser = response.ParseUserFromJson(username)
+	var apiPinnedTweets = twitterApiUser.Includes.PinnedTweets
+	var pinnedTweets []Tweet
+
+	for _, tweet := range apiPinnedTweets {
+		pinnedTweets = append(pinnedTweets, Tweet{
+			id:             tweet.Id,
+			authorId:       tweet.AuthorId,
+			createdAt:      tweet.CreatedAt,
+			text:           tweet.Text,
+			conversationId: tweet.ConversationId,
+			source:         tweet.Source,
+		})
+	}
 
 	return TwitterUser{
 		id:            twitterApiUser.Data.Id,
@@ -35,6 +47,6 @@ func GetTwitterUserByUsername(username string) TwitterUser {
 		name:          twitterApiUser.Data.Name,
 		username:      twitterApiUser.Data.Username,
 		email:         "",
-		tweets:        tweets,
+		pinnedTweets:  pinnedTweets,
 	}
 }
