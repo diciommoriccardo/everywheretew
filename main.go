@@ -1,10 +1,11 @@
 package main
 
 import (
-	"everywheretew.it/main/models"
 	"fmt"
 	"log"
 	"net/http"
+
+	"everywheretew.it/main/models"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -13,7 +14,6 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	router := NewRouter()
-
 	var testTweets = models.GetTweetsByUsername("AndreaDraghetti")
 	var testTwitterUser = models.GetTwitterUserByUsername("AndreaDraghetti")
 	fmt.Printf("\n######## Test Tweets: %s", testTweets)
