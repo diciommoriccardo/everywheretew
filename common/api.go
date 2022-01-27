@@ -7,7 +7,7 @@ import (
 )
 
 func GetRequest(url string) []byte {
-	log.Println("[INFO] - Calling api: " + url)
+	log.Println("[INFO] - Calling api GET: " + url)
 	var bearer = "Bearer " + TwitterBearerToken
 
 	req, err := http.NewRequest("GET", url, nil)
