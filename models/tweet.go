@@ -1,9 +1,10 @@
 package models
 
 import (
-	"everywheretew.it/main/models/response"
 	"fmt"
 	"strings"
+
+	"everywheretew.it/main/models/response"
 )
 
 type Tweet struct {

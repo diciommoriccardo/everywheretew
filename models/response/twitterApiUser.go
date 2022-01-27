@@ -2,8 +2,9 @@ package response
 
 import (
 	"encoding/json"
-	"everywheretew.it/main/common"
 	"log"
+
+	"everywheretew.it/main/common"
 )
 
 type TwitterApiUser struct {
