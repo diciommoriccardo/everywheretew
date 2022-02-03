@@ -1,10 +1,13 @@
 package main
 
-import "net/http"
+import (
+	"everywheretew.it/main/security"
+	"net/http"
+)
 
 type Route struct {
 	Name        string
-	Method      string
+	Method      []string
 	Pattern     string
 	HandlerFunc http.HandlerFunc
 }
@@ -14,37 +17,43 @@ type Routes []Route
 var routes = Routes{
 	Route{
 		"Index",
-		"GET",
+		[]string{"GET", "OPTIONS"},
 		"/",
 		homePage,
 	},
 	Route{
+		"Login",
+		[]string{"GET", "OPTIONS"},
+		"/api/login",
+		security.Login,
+	},
+	Route{
 		"Get all cluster",
-		"GET",
+		[]string{"GET", "OPTIONS"},
 		"/api/clusters/all",
 		getAllCluster,
 	},
 	Route{
 		"Get cluster",
-		"GET",
+		[]string{"GET", "OPTIONS"},
 		"/api/clusters/{id}",
 		getCluster,
 	},
 	Route{
 		"Add order data",
-		"POST",
+		[]string{"POST", "OPTIONS"},
 		"/api/order",
 		GetOrderData,
 	},
 	Route{
 		"Add product data",
-		"POST",
+		[]string{"POST", "OPTIONS"},
 		"/api/product",
 		GetProductData,
 	},
 	Route{
 		"Get user info",
-		"POST",
+		[]string{"POST", "OPTIONS"},
 		"/api/users/{id}",
 		GetUserData,
 	},

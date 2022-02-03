@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"everywheretew.it/main/common"
 	"fmt"
 	"net/http"
 
@@ -18,6 +19,7 @@ type Cluster struct {
 }
 
 func getCluster(w http.ResponseWriter, r *http.Request) {
+	common.SetupCORS(&w, r)
 	id := mux.Vars(r)["id"]
 	objID, _ := primitive.ObjectIDFromHex(id)
 	ClusterCollection := ConnectTo_Cluster()
@@ -38,6 +40,7 @@ func getCluster(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllCluster(w http.ResponseWriter, r *http.Request) {
+	common.SetupCORS(&w, r)
 	ClusterCollection := ConnectTo_Cluster()
 
 	res := []Cluster{}
