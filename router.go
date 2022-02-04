@@ -9,12 +9,12 @@ import (
 )
 
 func NewRouter() *mux.Router {
-
 	router := mux.NewRouter().StrictSlash(true)
+
 	for _, route := range routes {
 		var handler http.Handler
 
-		if strings.Compare(route.Name, "Login") == 0 {
+		if strings.Compare(route.Name, "Login") == 0 || strings.Compare(route.Method, "OPTIONS") == 0 {
 			handler = route.HandlerFunc
 		} else {
 			handler = security.BasicAuth(route.HandlerFunc)
@@ -22,11 +22,10 @@ func NewRouter() *mux.Router {
 		handler = Logger(handler, route.Name)
 
 		router.
-			Methods(route.Method...).
+			Methods(route.Method).
 			Path(route.Pattern).
 			Name(route.Name).
 			Handler(handler)
-
 	}
 
 	return router

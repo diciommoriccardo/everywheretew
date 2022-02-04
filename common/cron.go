@@ -9,8 +9,8 @@ import (
 var C = cron.New()
 
 func init() {
-	C.AddFunc("@every 10s", tweetJob)
-	C.Start()
+	//C.AddFunc("@every 10s", tweetJob)
+	//C.Start()
 }
 
 func tweetJob() {

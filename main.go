@@ -9,7 +9,7 @@ import (
 
 func homePage(w http.ResponseWriter, r *http.Request) {
 	common.SetupCORS(&w, r)
-	fmt.Println("Hello homepage")
+	fmt.Println("API TEST /: PASSED")
 }
 
 func main() {

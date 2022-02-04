@@ -1,8 +1,8 @@
 package security
 
 import (
+	"fmt"
 	"net/http"
-	"strings"
 )
 
 func BasicAuth(next http.HandlerFunc) http.HandlerFunc {
@@ -10,13 +10,14 @@ func BasicAuth(next http.HandlerFunc) http.HandlerFunc {
 		//If no Authentication header is present the 'ok' return value will be false.
 		username, password, ok := r.BasicAuth()
 		if ok {
-			expectedUsername := "test@test.com"
-			expectedPassword := "12345678"
+			//userMatch := common.GlobalUsersDb[username]
+			//passwordMatch := strings.Compare(password, userMatch.Password) == 0
 
-			usernameMatch := strings.Compare(username, expectedUsername) == 0
-			passwordMatch := strings.Compare(password, expectedPassword) == 0
+			fmt.Println(username)
+			fmt.Println(password)
+			passwordMatch := true
 
-			if usernameMatch && passwordMatch {
+			if passwordMatch {
 				next.ServeHTTP(w, r)
 				return
 			}
