@@ -14,6 +14,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	router := NewRouter()
+	//	security.InitInMemoryDb()
 	//var testTweets = models.GetTweetsByUsername("AndreaDraghetti")
 	//var testTwitterUser = models.GetTwitterUserByUsername("AndreaDraghetti")
 	//fmt.Printf("\n######## Test Tweets: %s", testTweets)
