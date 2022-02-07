@@ -1,6 +1,10 @@
 package main
 
-import "net/http"
+import (
+	"everywheretew.it/main/common"
+	"everywheretew.it/main/security"
+	"net/http"
+)
 
 type Route struct {
 	Name        string
@@ -19,10 +23,28 @@ var routes = Routes{
 		homePage,
 	},
 	Route{
+		"Login",
+		"GET",
+		"/api/login",
+		security.Login,
+	},
+	Route{
+		"Get all cluster",
+		"OPTIONS",
+		"/api/clusters/all",
+		common.HandleOptions,
+	},
+	Route{
 		"Get all cluster",
 		"GET",
 		"/api/clusters/all",
 		getAllCluster,
+	},
+	Route{
+		"Get cluster",
+		"OPTIONS",
+		"/api/clusters/{id}",
+		getCluster,
 	},
 	Route{
 		"Get cluster",

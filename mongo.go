@@ -45,11 +45,11 @@ func ConnectTo_Cluster() *mongo.Collection {
 	uri := "mongodb+srv://cluster-everywheretew.4ulev.mongodb.net/myFirstDatabase?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority&tlsCertificateKeyFile=bin/mongoCert.pem"
 	clientOpts := options.Client().ApplyURI(uri)
 	client, ConnectionError := mongo.Connect(ctx, clientOpts)
-	err := client.Ping(ctx, readpref.Primary())
+	//	err := client.Ping(ctx, readpref.Primary())
 
 	if ConnectionError != nil {
 		fmt.Println("ERROR")
-		log.Fatal(err)
+		//	log.Fatal(err)
 		log.Fatal(ConnectionError)
 	}
 
